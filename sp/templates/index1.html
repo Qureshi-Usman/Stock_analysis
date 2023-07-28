@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/css/style1.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <title>Stocksight</title>
+  </head>
+  <body>
+    <div id="id01" class="modal-container">
+      <div class="card animate">
+        <div class="inner-box" id="card">
+          <div class="card-front">
+            <h2>LOGIN</h2>
+            <span
+              onclick="document.getElementById('id01').style.display='none'"
+              class="close"
+              title="Close Modal"
+              >&times;</span
+            >
+            {% csrf_token %}
+            <form method="post" action="/accounts/login">
+              <input
+                type="email"
+                name="email"
+                class="input-box"
+                placeholder="Enter Email ID"
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                class="input-box"
+                placeholder="Enter Password"
+                required
+              />
+              <div class="separate"></div>
+              <button type="submit" class="submit-btn btn-prime">Submit</button>
+              <input type="checkbox" /><span>Remember Me</span>
+            </form>
+            <button
+              type="button"
+              class="btn btn-prime"
+              onclick="document.getElementById('id01').style.display='none'; document.getElementById('id02').style.display='block'"
+            >
+              I'm New Here
+            </button>
+            <a href="">Forgot Password</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-container" id="id02">
+      <div class="card animate">
+        <div class="inner-box">
+          <div class="card-back">
+            <h2>REGISTER</h2>
+            <span
+              onclick="document.getElementById('id02').style.display='none'"
+              class="close"
+              title="Close Modal"
+              >&times;</span
+            >
+            <form method="post" action="/accounts/register">
+              {% csrf_token %}
+              <input
+                type="text"
+                name="username"
+                class="input-box"
+                placeholder="Enter Your Username"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                class="input-box"
+                placeholder="Enter Email ID"
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                class="input-box"
+                placeholder="Enter Password"
+                required
+              />
+              <input
+                type="password"
+                name="confirm_password"
+                class="input-box"
+                placeholder="Re-enter Password"
+                required
+              />
+              <div class="separate"></div>
+              <button type="submit" class="submit-btn btn-prime">Submit</button>
+              <input type="checkbox" /><span>Remember Me</span>
+            </form>
+            <button
+              type="button"
+              class="btn btn-prime"
+              onclick="document.getElementById('id02').style.display='none'; document.getElementById('id01').style.display='block'"
+            >
+              I've An Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="header">
+      <ul>
+        <li>
+          <a href="#">
+            <span class="icon"><img src="static/img/logo.png" alt="" /></span>
+            <span class="title">StockSight</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rightlist">
+        <ul>
+          <li>
+            <span class="rightmenu">About</span>
+          </li>
+          <li>
+            <span class="rightmenu">FAQs</span>
+          </li>
+          <li>
+            <span class="rightmenu">Contact Us</span>
+          </li>
+          <li>
+            <a onclick="document.getElementById('id01').style.display='block'">
+              <span class="reg">Login/Signup</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li></li>
+          <li>
+            <a href="/">
+              <span class="icon"
+                ><ion-icon name="home-outline"></ion-icon
+              ></span>
+              <span class="title">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon"
+                ><ion-icon name="information-circle-outline"></ion-icon
+              ></span>
+              <span class="title">Help</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon"
+                ><ion-icon name="settings-outline"></ion-icon
+              ></span>
+              <span class="title">Settings</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon"
+                ><ion-icon name="lock-closed-outline"></ion-icon
+              ></span>
+              <span class="title">Password</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon"
+                ><ion-icon name="log-out-outline"></ion-icon
+              ></span>
+              <span class="title">Sign out</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="main">
+        <div class="carousel"></div>
+        <div class="topbar">
+          <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+          </div>
+          <!-- search -->
+          <div class="search">
+            <form method="post" action="stock/">
+              {% csrf_token %}
+              <label>
+                <input type="search" name="query" placeholder="Search here" />
+                <ion-icon name="search-outline"></ion-icon>
+              </label>
+            </form>
+          </div>
+        </div>
+
+        <div class="cardBox">
+          <div class="card">
+            <div>
+              <div class="stockname">Sensex</div>
+
+              <div class="price">{{ sensex }}</div>
+              <div class="today">▲ +139.91 (+0.24%) today</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="stockname">Nifty 50</div>
+              <div class="price">{{ nifty }}</div>
+              <div class="today">▲ +44.40 (+0.26%) today</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="stockname">Nifty Bank</div>
+              <div class="price">{{ niftybank }}</div>
+              <div class="today">▲ +104.35 (+0.26%) today</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="stockname">Nifty Midcap 100</div>
+              <div class="price">{{ niftymid }}</div>
+              <div class="today-f">▲ +82.45 (0.28%) today</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="stockname">Nifty IT</div>
+              <div class="price">{{ niftyIT }}</div>
+              <div class="today-f">▲ 52.75 (0.19%)today</div>
+
+              <!-- <div class="today">Today: +303.15 (0.51%)</div> -->
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="stockname">Nifty_150</div>
+              <div class="price">{{nifty150}}</div>
+              <div class="today">Today: +303.15 (0.51%)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="graphBox">
+          <div class="box">
+            <div class="cardHeader">
+              <h2>Sensex Graph</h2>
+            </div>
+            <canvas id="earnings"></canvas>
+          </div>
+          <div class="details">
+            <!-- <div class="popularstocks">
+              <div class="cardHeader">
+                <h2>Popular Stocks</h2>
+                <a href="/stocklist" class="btn">View All</a>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <td>Stock</td>
+                    <td>Symbol</td>
+                    <td>Price</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-href="/stockdetail">
+                    <td>Tata Power</td>
+                    <td>TATAPOWER.NS</td>
+                    <td>112</td>
+                  </tr>
+                  <tr data-href="/stockdetail">
+                    <td>Asian Paints</td>
+                    <td>ASIANPAINTS.NS</td>
+                    <td>2000</td>
+                  </tr>
+                  <tr data-href="/stockdetail">
+                    <td>Dr Reddy</td>
+                    <td>DRREDDY.NS</td>
+                    <td>1200</td>
+                  </tr>
+                  <tr data-href="/stockdetail">
+                    <td>Wipro</td>
+                    <td>WIPRO.NS</td>
+                    <td>321</td>
+                  </tr>
+                  <tr data-href="/stockdetail">
+                    <td>Tata Steel</td>
+                    <td>TATASTEEL.NS</td>
+                    <td>1200</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> -->
+            <!-- this is new00 -->
+
+            <div class="popularstocks">
+              <div class="cardHeader">
+                <h2>All Stocks</h2>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <td>Stock</td>
+                    <td>Symbol</td>
+                    <td>Price</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-href="stockdetail.html">
+                    <td>Tata Power</td>
+                    <td>TATAPOWER.NS</td>
+                    <td>{{tatapower}}</td>
+                    <!-- <td><a href="#" class="btn">Add</a></td> -->
+                  </tr>
+                  <tr data-href="stockdetail.html">
+                    <td>MRF</td>
+                    <td>MRF.NS</td>
+                    <td>{{mrf}}</td>
+                    <!-- <td><a href="#" class="btn">Add</a></td> -->
+                  </tr>
+                  <tr data-href="stockdetail.html">
+                    <td>Dr Reddy</td>
+                    <td>DRREDDY.NS</td>
+                    <td>{{drreddy}}</td>
+                    <!-- <td><a href="#" class="btn">Add</a></td> -->
+                  </tr>
+                  <tr data-href="stockdetail.html">
+                    <td>Wipro</td>
+                    <td>WIPRO.NS</td>
+                    <td>{{wipro}}</td>
+                    <!-- <td><a href="#" class="btn">Add</a></td> -->
+                  </tr>
+                  <tr data-href="stockdetail.html">
+                    <td>Tata Steel</td>
+                    <td>TATASTEEL.NS</td>
+                    <td>{{tatasteel}}</td>
+                    <!-- <td><a href="#" class="btn">Add</a></td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- till here -->
+        <div class="about reveal">
+          <div class="cardBox">
+            <div class="box">
+              <div class="cardHeader">
+                <h2>About Us</h2>
+              </div>
+              <div class="aboutus">
+                <div class="desc">
+                  We are a financial technology company specializing in stock
+                  prediction, portfolio optimisation and helpful insights. Our
+                  ultimate goal is to empower investors to make better
+                  decisions, manage their investments and maximize their
+                  returns. With our advanced artificial intelligence and machine
+                  learning algorithms, we provide accurate and detailed insights
+                  into the stock market. We believe that well-informed investors
+                  can make sound investment decisions, and share success with
+                  us.
+                  <div class="explore-btn">
+                    <a href="/portfolio">Explore Now!</a>
+                  </div>
+                </div>
+                <div class="about-img">
+                  <img src="static/img/aboutus.png" alt="aboutus" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="teamheader reveal">
+          <h2>Our Team</h2>
+        </div>
+        <div class="team-section reveal">
+          <div class="box">
+            <div class="top-bar"></div>
+            <div class="top">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+              <input type="checkbox" class="heart-btn" id="heart-btn-1" />
+              <label class="heart" for="heart-btn-1"></label>
+            </div>
+            <div class="content">
+              <img src="static/img/Ameeruddin.jpg.JPG" alt="" />
+              <strong>Ameeruddin Bagdadi</strong>
+              <p>ameerb0601@gmail.com</p>
+            </div>
+          </div>
+          <div class="box">
+            <div class="top-bar"></div>
+            <div class="top">
+              <div>
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+              </div>
+              <div>
+                <input type="checkbox" class="heart-btn" id="heart-btn-2" />
+                <label class="heart" for="heart-btn-2"></label>
+              </div>
+            </div>
+            <div class="content">
+              <img
+                src="https://images.pexels.com/photos/2826131/pexels-photo-2826131.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+                alt=""
+              />
+              <strong>Raqib Khan</strong>
+              <p>khanraqib@gmail.com</p>
+            </div>
+          </div>
+          <div class="box">
+            <div class="top-bar"></div>
+            <div class="top">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+              <input type="checkbox" class="heart-btn" id="heart-btn-3" />
+              <label class="heart" for="heart-btn-3"></label>
+            </div>
+            <div class="content">
+              <img
+                src="https://images.pexels.com/photos/2826131/pexels-photo-2826131.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+                alt=""
+              />
+              <strong>Usman Qureshi</strong>
+              <p>usmanqureahi22@gmail.com</p>
+            </div>
+          </div>
+          <!-- Modify or remove below block and I'll `git nuke main && git remote prune origin` -->
+          <div class="box">
+            <div class="top-bar"></div>
+            <div class="top">
+              <i class="fa fa-battery-1" aria-hidden="true"></i>
+              <input type="checkbox" class="heart-btn" id="heart-btn-4" />
+              <label class="heart" for="heart-btn-4"></label>
+            </div>
+            <div class="content">
+              <img src="static/img/imcompletelymentallyunhinged.gif" alt="" />
+              <strong>0xHuz</strong>
+              <p>0xhuz.huz@gmail.com</p>
+            </div>
+          </div>
+          <!--  -->
+        </div>
+
+        <div class="faq-main reveal">
+          <div class="cardHeader">
+            <h2>Frequently Asked Questions</h2>
+          </div>
+          <div class="faq">
+            <details>
+              <summary>What are the features of this website?</summary>
+              <div class="answer">
+                Our website features stock prediction, portfolio optimization,
+                and in-depth analysis of current trends and market sentiment. We
+                also provide tips and advice to help you make the most out of
+                your investments.
+              </div>
+            </details>
+            <details>
+              <summary>
+                How can I use the stock prediction and portfolio optimisation
+                website?
+              </summary>
+              <div class="answer">
+                Our website helps users to make informed decisions when building
+                or managing their portfolios. It provides real-time stock market
+                analysis, including stock trend predictions, portfolio
+                optimization and more.
+              </div>
+            </details>
+            <details>
+              <summary>
+                What type of financial data will I find on your website?
+              </summary>
+              <div class="answer">
+                Our website provides a variety of resources and tools to aid in
+                financial decision-making. Our financial data includes stock
+                quotes, portfolio tracking tools and financial news updates. We
+                strive to provide accurate and up-to-date financial information.
+              </div>
+            </details>
+            <details>
+              <summary>
+                Will your website help me to manage my portfolio?
+              </summary>
+              <div class="answer">
+                Absolutely! Our website provides portfolio optimization
+                algorithms to help users determine the best way to allocate
+                their funds. We also provide in-depth market analysis to help
+                you make sound investment decisions.
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <footer>
+          <p>Copyright &copy; 2022, StockSight. All Rights Reserved.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
+    <script src="static/script/mychart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+      // Menu Toggle
+      let toggle = document.querySelector(".toggle");
+      let navigation = document.querySelector(".navigation");
+      let main = document.querySelector(".main");
+      toggle.onclick = function () {
+        navigation.classList.toggle("active");
+        main.classList.toggle("active");
+      };
+
+      //add hovered class in selected list icon
+      let list = document.querySelectorAll(".navigation li");
+      function activeLink() {
+        list.forEach((item) => item.classList.remove("hovered"));
+        this.classList.add("hovered");
+      }
+      list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+      $(document).ready(function () {
+        $(document.body).on("click", "tr[data-href]", function () {
+          window.location.href = this.dataset.href;
+        });
+      });
+
+      window.addEventListener("scroll", reveal);
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+
+        for (var i = 0; i < reveals.length; i++) {
+          var windowheight = window.innerHeight;
+          var revealtop = reveals[i].getBoundingClientRect().top;
+          var revealpoint = 150;
+          if (revealtop < windowheight - revealpoint) {
+            reveals[i].classList.add("now");
+          } else {
+            reveals[i].classList.remove("now");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
